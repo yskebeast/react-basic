@@ -3,12 +3,12 @@
 import { memo, useCallback, useState } from "react";
 import styles from "./styles.module.css";
 
-interface HanlderClick {
+interface HandleClick {
   handleClick: () => void;
 }
 
-export const NormalComponent = memo(({ handleClick }: HanlderClick) => {
-  console.log("NormalComponent　：　関数は値が変更されなくても毎回新しい関数を生成するためレンダリングされる");
+const NormalComponent = memo(({ handleClick }: HandleClick) => {
+  console.log("NormalComponent：関数は値が変更されなくても毎回新しい関数を生成するためレンダリングされる");
 
   return (
     <button onClick={handleClick} className={styles.button}>
@@ -17,8 +17,8 @@ export const NormalComponent = memo(({ handleClick }: HanlderClick) => {
   );
 });
 
-export const CallbackComponent = memo(({ handleClick }: HanlderClick) => {
-  console.log("CallbackComponent　：　useCallbackを使ってるため関数は再生成されない");
+const CallbackComponent = memo(({ handleClick }: HandleClick) => {
+  console.log("CallbackComponent：useCallbackを使ってるため関数は再生成されない");
 
   return (
     <button onClick={handleClick} className={styles.button}>
@@ -28,9 +28,11 @@ export const CallbackComponent = memo(({ handleClick }: HanlderClick) => {
 });
 
 export default function Page() {
-  const [bool, setBool] = useState(false);
-  const handleState = () => {
-    setBool(!bool);
+  console.log("Page：毎回レンダリングされる");
+
+  const [count, setCount] = useState(0);
+  const handleCountUp = () => {
+    setCount(count + 1);
   };
 
   const handleClick = () => {
@@ -45,10 +47,8 @@ export default function Page() {
     <div>
       <h1 className={styles.heading}>useCallbackの使い方</h1>
       <div className={styles.container}>
-        <p>親state : {bool ? "true" : "false"}</p>
-        <button onClick={handleState} className={styles.button}>
-          state更新
-        </button>
+        <button onClick={handleCountUp}>COUNT UP</button>
+        <p>count : {count}</p>
 
         <NormalComponent handleClick={handleClick} />
         <CallbackComponent handleClick={handleCallback} />
