@@ -4,58 +4,41 @@ import { memo, useRef, useState } from "react";
 
 import styles from "./styles.module.css";
 
-const NormalComponent = () => {
-  console.log(
-    "NormalComponent　：　親コンポーネントが再レンダーされた時に再レンダー"
-  );
+const NormalComponent = ({ bool }: { bool: boolean }) => {
+  console.log("NormalComponent：propsが変更されなくても毎回レンダリングされる");
 
-  return (
-    <div>
-      <p>通常のコンポーネント</p>
-      <p>
-        親コンポーネントがレンダリングされると小コンポーネントも再レンダーされる
-      </p>
-    </div>
-  );
+  return <p>propsが変更されなくても毎回レンダリングされる</p>;
 };
 
-const MemoComponent = memo((props: { render: boolean }) => {
-  console.log("MemoComponent　：　propsが変更された時に再レンダー");
+const MemoComponent = memo(({ bool }: { bool: boolean }) => {
+  console.log("MemoComponent：propsが変更された時に再レンダリング");
 
-  return (
-    <div>
-      <p>memo化コンポーネント</p>
-      <p>
-        親コンポーネントがレンダリングされても、propsが更新されない限り再レンダーされない
-      </p>
-    </div>
-  );
+  return <p>propsが変更された時に再レンダリング</p>;
 });
 
 export default function Page() {
-  const [bool, setBool] = useState(false);
-  const [render, setRender] = useState(false);
-  const count = useRef(0);
+  console.log("Page：毎回レンダリングされる");
 
-  const handleState = () => {
-    count.current++;
-    if (count.current % 5 === 0 && count.current !== 0) {
-      setRender(!render);
+  const [count, setCount] = useState(0);
+  const [bool, setBool] = useState(false);
+
+  const handleClick = () => {
+    console.log(count);
+    if (count % 3 === 0) {
+      setBool(!bool);
     }
-    setBool(!bool);
+    setCount(count + 1);
   };
+
   return (
     <div>
-      <h1 className={styles.heading}>memoの使い方</h1>
+      <h1 className={styles.heading}>useCallbackの使い方</h1>
       <div className={styles.container}>
-        <p>親state : {bool ? "true" : "false"}</p>
-        <p>{count.current}</p>
-        <button onClick={handleState} className={styles.button}>
-          state更新
-        </button>
+        <button onClick={handleClick}>COUNT UP</button>
+        <p>count : {count}</p>
 
-        <NormalComponent />
-        <MemoComponent render={render} />
+        <NormalComponent bool={bool} />
+        <MemoComponent bool={bool} />
       </div>
     </div>
   );
