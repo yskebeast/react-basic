@@ -1,0 +1,24 @@
+.heading {
+  font-size: 2rem;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+}
+
+.container {
+  margin: 2rem auto 4rem;
+  display: grid;
+  gap: 2rem;
+  place-items: center;
+}
+
+.input {
+  padding: 1rem 5rem;
+  border: 5px solid gray;
+  color: #000;
+}
+
+.button {
+  border: 1px solid #fff;
+  padding: 1rem 2rem;
+}

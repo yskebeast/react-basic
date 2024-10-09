@@ -24,10 +24,20 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+
+  display: grid;
+  grid-template-columns: 300px 1fr;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.links {
+  display: grid;
+  gap: 1rem;
+  padding: 2rem;
+  background-color: rgb(67, 67, 67);
 }
