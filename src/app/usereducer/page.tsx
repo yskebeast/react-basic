@@ -4,52 +4,63 @@ import { useReducer } from "react";
 
 import styles from "./styles.module.css";
 
-type Shape = { finger: number; emoji: string };
-type Action = { type: string };
+interface Signal {
+  color: string;
+  signal: string;
+}
+interface Action {
+  color: string;
+}
 
-const shapeState = { finger: 0, emoji: "🤔" };
-const shapeReducer = (shape: Shape, action: Action) => {
-  switch (action.type) {
-    case "rock": {
-      return { finger: 0, emoji: "👊" };
+const signalInitial = {
+  color: "red",
+  signal: "赤",
+};
+
+const signalReducer = (signal: Signal, action: Action) => {
+  switch (action.color) {
+    case "red": {
+      return { color: "red", signal: "赤" };
     }
-    case "paper": {
-      return { finger: 5, emoji: "🖐" };
+    case "yellow": {
+      return { color: "yellow", signal: "黄色" };
     }
-    case "sissior": {
-      return { finger: 2, emoji: "✌️" };
+    case "blue": {
+      return { color: "blue", signal: "青" };
     }
     default: {
-      return {
-        finger: 10,
-        emoji: "🤔",
-      };
+      return signal;
     }
   }
 };
 
 export default function Page() {
-  const [shape, dispatch] = useReducer(shapeReducer, shapeState);
-  const handleRock = () => {
-    dispatch({ type: "rock" });
+  const [signal, dispatch] = useReducer(signalReducer, signalInitial);
+
+  const handleRed = () => {
+    dispatch({ color: "red" });
   };
-  const handlePaper = () => {
-    dispatch({ type: "paper" });
+  const handleYellow = () => {
+    dispatch({ color: "yellow" });
   };
-  const handleSissior = () => {
-    dispatch({ type: "sissior" });
+  const handleBlue = () => {
+    dispatch({ color: "blue" });
   };
 
   return (
     <div>
       <h1 className={styles.heading}>useReducer</h1>
       <div className={styles.container}>
-        <p>
-          {shape.finger} : {shape.emoji}
-        </p>
-        <button onClick={handleRock}>グー</button>
-        <button onClick={handlePaper}>パー</button>
-        <button onClick={handleSissior}>チョキ</button>
+        <p>信号 : {signal?.color}</p>
+        <button className={styles.button} onClick={handleRed}>
+          赤
+        </button>
+        <button className={styles.button} onClick={handleYellow}>
+          黄色
+        </button>
+        <button className={styles.button} onClick={handleBlue}>
+          青
+        </button>
       </div>
     </div>
   );
