@@ -6,6 +6,6 @@
 
 - useRef の値は更新されてもレンダリングされない
 
-- 更新した useRef.current を反映するには useEffect などレンダリングが発火される機能に含める
+- 更新した useRef.current を反映するには useEffect などレンダリングする機能と絡める
 
 ---
