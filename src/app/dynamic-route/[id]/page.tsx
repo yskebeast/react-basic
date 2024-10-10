@@ -1,7 +1,7 @@
 export default function Page({ params }: { params: { id: string } }) {
   return (
     <div>
-      <h1>blog page {params.id}</h1>
+      <h1>dynamic-route {params.id}</h1>
     </div>
   );
 }
