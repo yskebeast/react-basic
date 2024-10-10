@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 const objStyle = {
   style: {
@@ -29,15 +29,18 @@ const linkStyle = {
 };
 
 export default function Page() {
-  const pathname = usePathname();
   const router = useRouter();
-  const randomPage = Math.floor(Math.random() * 100);
+  const [randomPage, useRandomPage] = useState<null | number>(null);
+
+  useEffect(() => {
+    useRandomPage(Math.floor(Math.random() * 100));
+  }, []);
 
   return (
     <div style={style}>
       <h1 {...objStyle}>Index Page</h1>
       <Link style={linkStyle} href={`/dynamic-route/${randomPage}`}>
-        dynamic-route {randomPage}
+        dynamic-route : {randomPage}
       </Link>
       <Link style={linkStyle} href="/dashboard">
         dashboard
